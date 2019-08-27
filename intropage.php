@@ -6,13 +6,13 @@ if(!isset($_SESSION["session_username"])) {
 ?>
 
 
-<?php include("includes/header.php"); ?>
+<?php include("includes/header.php"); \header\addHeader(); ?>
 <div id="welcome">	
-	<h2>Welcome, <span><?php echo $_SESSION['session_username'];?>! </span></h2>
-	<p><a href="logout.php">Logout</a> Here!</p>
+	<h2>Добро пожаловать, <span><?php echo $_SESSION['session_username'];?>! </span></h2>
+	<p><a href="logout.php">Выйти</a> Здесь!</p>
 </div>
 
-<?php include("includes/footer.php"); ?>
+<?php include("includes/footer.php"); \footer\addFooter(); ?>
 	
 
 <?php

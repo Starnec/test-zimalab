@@ -2,8 +2,8 @@
 session_start();
 ?>
 
-<?php require_once("includes/connection.php"); ?>
-<?php include("includes/header.php"); ?>
+<?php //require_once("includes/connection.php"); ?>
+<?php include("includes/header.php"); \header\addHeader(); ?>
 
 <?php
 
@@ -14,23 +14,23 @@ header("Location: intropage.php");
 
 if(isset($_POST["login"])){
 
-if(!empty($_POST['username']) && !empty($_POST['password'])) {
-    $username=$_POST['username'];
-    $password=$_POST['password'];
+if(!empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['email'])) {
+	$first_name = $_POST['first_name'];
+	$last_name = $_POST['last_name'];
+	$email = $_POST['email'];
 
-    $query =mysql_query("SELECT * FROM usertbl WHERE username='".$username."' AND password='".$password."'");
+    $query =mysql_query("SELECT * FROM usertbl WHERE first_name='".$first_name."' AND last_name='".$last_name."' AND email='".$email."'");
 
     $numrows=mysql_num_rows($query);
-    if($numrows!=0)
-
+    if ($numrows != 0)
     {
     while($row=mysql_fetch_assoc($query))
     {
-    $dbusername=$row['username'];
-    $dbpassword=$row['password'];
+    $dbusername = $row['username'];
+    $dbpassword = $row['password'];
     }
 
-    if($username == $dbusername && $password == $dbpassword)
+    if ($username == $dbusername && $password == $dbpassword)
 
     {
 
@@ -42,41 +42,45 @@ if(!empty($_POST['username']) && !empty($_POST['password'])) {
     }
     } else {
 
- $message =  "Invalid username or password!";
+ $message =  "Неверное имя пользователя или пароль!";
     }
 
 } else {
-    $message = "All fields are required!";
+    $message = "Не все обязательные поля заполнены!";
 }
 }
 ?>
 
-
-
-
     <div class="container mlogin">
             <div id="login">
-    <h1>LOGIN</h1>
+    <h1>ВХОД</h1>
 <form name="loginform" id="loginform" action="" method="POST">
     <p>
-        <label for="user_login">Username<br />
-        <input type="text" name="username" id="username" class="input" value="" size="20" /></label>
-    </p>
-    <p>
-        <label for="user_pass">Password<br />
-        <input type="password" name="password" id="password" class="input" value="" size="20" /></label>
-    </p>
+		<label for="user_login">Имя*<br />
+		<input type="text" name="first_name" id="first_name" class="input" size="32" value=""  /></label>
+	</p>
+
+	<p>
+		<label for="user_login">Фамилия*<br />
+		<input type="text" name="last_name" id="last_name" class="input" size="32" value=""  /></label>
+	</p>
+
+	<p>
+		<label for="user_pass">Email*<br />
+		<input type="email" name="email" id="email" class="input" value="" size="32" /></label>
+	</p>
+
         <p class="submit">
-        <input type="submit" name="login" class="button" value="Log In" />
+        <input type="submit" name="login" class="button" value="Войти" />
     </p>
-        <p class="regtext">No account yet? <a href="register.php" >Register Here</a>!</p>
+        <p class="regtext">У Вас ещё нет аккаунта? <a href="register.php" >Зарегистрируйтесь</a>!</p>
 </form>
 
     </div>
 
     </div>
 	
-	<?php include("includes/footer.php"); ?>
+	<?php include("includes/footer.php"); \footer\addFooter(); ?>
 	
-	<?php if (!empty($message)) {echo "<p class=\"error\">" . "MESSAGE: ". $message . "</p>";} ?>
+	<?php if (!empty($message)) {echo "<p class=\"error\">" . "Сообщение: ". $message . "</p>";} ?>
 	
