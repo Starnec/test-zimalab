@@ -51,7 +51,7 @@ endif;
 <div class = "container mregister">
 			<div id = "login">
 	<h1>РЕДАКТИРОВАНИЕ ДАННЫХ АККАУНТА</h1>
-<form name="registerform" id="registerform" action="profile-update.php" method="POST">
+<form name="registerform" id="registerform" action="profile.php" method="POST">
     
     <p>
         <label for="user_login">Имя<br />
@@ -93,7 +93,7 @@ endif;
 		<input type="text" name="phone_3" id="phone_3" class="input" value="" size="32" /></label>
 	</p>	
  
-	<button>Сохранить</button>
+	<button class="button">Сохранить</button>
 </form>
 
 </div>
@@ -102,11 +102,8 @@ endif;
 <div class = "container mregister">
 	<div id = "login">
 <h1>УДАЛИТЬ АККАУНТ</h1>
-<h4>Укажите ваш email и пароль</h4>
-<form action="delete.php" method="POST" name="form3">
-<input type="text" name="email" placeholder=" exemple@exemple.ru " />
-<input type="password" name="password" placeholder=" password " />
-<input type="submit" name="submit" value="        delete       " />
+<form action="profile.php" method="POST" name="form3">
+<input type="submit" name="submit" class="button" value="Удалить аккаунт" />
 </form>
 </div>
 </div>

@@ -1,9 +1,12 @@
-<?php //require_once("includes/connection.php"); ?>
-<?php include("includes/header.php"); \header\addHeader(); ?>
+<?php 
 
+//namespace App;
 
-<?php
+//use Db;
 
+include("app/View/header.php");
+
+require_once("connection.php");
 if (isset($_POST["register"])) {
 
 
@@ -17,16 +20,16 @@ if (isset($_POST["register"])) {
 		$phone_2 = $_POST['phone_2'];
 		$phone_3 = $_POST['phone_3'];
 			
-		
-		$query = mysql_query("SELECT * FROM usertbl WHERE first_name='".$first_name."'");
-		$numrows = mysql_num_rows($query);
+		//$pdo = new Db::instance();
+		$query = $pdo->query("SELECT * FROM users WHERE first_name = ".$first_name."");
+		$query = $pdo->fetchAll();
+		$numrows = \PDOStatement::rowCount;
 		
 		if ($numrows == 0) {
-			$sql = "INSERT INTO usertbl
+			$result = $pdo->exec("INSERT INTO users
 					(first_name, last_name, email, company_name, position, phone_1, phone_2, phone_3) 
-					VALUES('$first_name','$last_name', '$email', '$company_name', '$position','$phone_1', '$phone_2', '$phone_3')";
-
-			$result = mysql_query($sql);
+					VALUES('$first_name','$last_name', '$email', '$company_name', '$position','$phone_1', '$phone_2', '$phone_3')"	
+					);
 
 			if ($result) {
 				$message = "Аккаунт успешно создан!";
@@ -41,75 +44,12 @@ if (isset($_POST["register"])) {
 	} else {
 		$message = "Не все обязательные поля заполнены!";
 	}
-
-} else {
-?>
-
-
-<?php if (!empty($message)) {
-	echo "<p class=\"error\">" . "Сообщение: ". $message . "</p>";} ?>
-	
-<div class = "container mregister">
-	<div id = "login">
-	<h1>РЕГИСТРАЦИЯ</h1>
-	<form name="registerform" id="registerform" action="register.php" method="post">
-		<p>
-			<label for="user_login">Имя*<br />
-			<input type="text" name="first_name" id="first_name" class="input" size="32" value=""  /></label>
-		</p>
-
-		<p>
-			<label for="user_login">Фамилия*<br />
-			<input type="text" name="last_name" id="last_name" class="input" size="32" value=""  /></label>
-		</p>
-
-		<p>
-			<label for="user_pass">Email*<br />
-			<input type="email" name="email" id="email" class="input" value="" size="32" /></label>
-		</p>
-		
-		<p>
-			<label for="user_pass">Компания<br />
-			<input type="text" name="company_name" id="company_name" class="input" value="" size="20" /></label>
-		</p>
-		
-		<p>
-			<label for="user_pass">Должность<br />
-			<input type="text" name="position" id="position" class="input" value="" size="32" /></label>
-		</p>	
-
-		<p>
-			<label for="user_pass">Телефон 1<br />
-			<input type="text" name="phone_1" id="phone_1" class="input" value="" size="32" /></label>
-		</p>	
-
-		<p>
-			<label for="user_pass">Телефон 2<br />
-			<input type="text" name="phone_2" id="phone_2" class="input" value="" size="32" /></label>
-		</p>	
-
-		<p>
-			<label for="user_pass">Телефон 3<br />
-			<input type="text" name="phone_3" id="phone_3" class="input" value="" size="32" /></label>
-		</p>	
-			
-			<p class="submit">
-			<input type="submit" name="register" id="register" class="button" value="Регистрация" />
-		</p>
-
-		<p class="regtext">* - Поля, обязательные для заполнения</p>
-		
-		<p class="regtext">Уже зарегистрированы? <a href="login.php" >Авторизация</a>!</p>
-	</form>
-	
-	<p><a href="accountlist.php">Отобразить список аккаунтов</a></p>
-
-	</div>
-</div>
-	
-	
-<?php include("includes/footer.php"); \footer\addFooter(); ?>
-
-<?php
 }
 ?>
+
+
+<?php if (!empty($message)) {echo "<p class=\"error\">" . "Сообщение: ". $message . "</p>";} ?>
+	
+<?php include("app/View/RegistView.php"); ?>
+	
+<?php include("app/View/footer.php"); ?>
